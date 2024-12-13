@@ -21,6 +21,10 @@ app.get("/api/:username", (req, res) => {
   const username = req.params.username;
   res.json({ username });
 });
+
+app.get("/today", (req, res) => {
+  res.send(`${Date.now()}`);
+});
 app.listen(3000, () => {
   console.log(`server is running at 3000`);
 });
