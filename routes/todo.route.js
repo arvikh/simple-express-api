@@ -17,4 +17,6 @@ router.post("/create", verifyJsonWebToken, async (req, res) => {
 // with todo_id change the isdone to tru
 // delete a to do
 // delete todo by its id
+// get todo by id
+
 export { router };
