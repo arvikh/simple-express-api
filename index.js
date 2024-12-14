@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
 import express from "express";
+import { router as todoRouter } from "./routes/todo.route.js";
 import { router as userRouter } from "./routes/user.route.js";
 dotenv.config();
 // to load env
@@ -15,6 +16,7 @@ app.use(cors());
 // to allow cross origin request
 
 app.use("/user", userRouter);
+app.use("/todo", todoRouter);
 
 mongoose.connect(process.env.MONGODB_URI);
 console.log("db connected");
