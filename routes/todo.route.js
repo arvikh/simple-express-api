@@ -18,9 +18,12 @@ router.post("/create", verifyJsonWebToken, async (req, res) => {
 // get all todos by your id
 // take your id and get all your todos as a list
 router.get("/gettask", verifyJsonWebToken, async (req, res) => {
+  const {userId} = req.body;
   const tasksList = [];
   const tasks = (await todoModel.find()).forEach((eachTask) => {
-    tasksList.push(eachTask.name);
+    if (eachTask.user.toString() === userId){
+      tasksList.push(eachTask.name);
+    }
   });
   return res.status(201).json(tasksList);
 });
