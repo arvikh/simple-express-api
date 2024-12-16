@@ -1,30 +1,33 @@
+import dotenv from "dotenv";
+import cors from "cors";
+import mongoose from "mongoose";
 import express from "express";
-// getting external library ref
+import { router as todoRouter } from "./routes/todo.route.js";
+import { router as userRouter } from "./routes/user.route.js";
+dotenv.config();
+// to load env
+
 const app = express();
 
-app.get("/", (req, res) => {
-  //check for user id
-  // take this id and check in db
-  // get results from db
-  // send results as response
-  res.json({ message: "hello world" });
-});
+app.use(express.json());
+// to accept json
+
+app.use(cors());
+// to allow cross origin request
+
+app.use("/user", userRouter);
+app.use("/todo", todoRouter);
+
+mongoose.connect(process.env.MONGODB_URI);
+console.log("db connected");
+// to connect to DB
+let port = process.env.PORT || 3000;
+// get port from env
+
 app.get("/health", (req, res) => {
-  res.json({ message: "application is working fine" });
+  res.json({ message: "The application health is good" });
 });
 
-app.get("/sai", (req, res) => {
-  res.json({ message: "hello this is Sai" });
-});
-
-app.get("/api/:username", (req, res) => {
-  const username = req.params.username;
-  res.json({ username });
-});
-
-app.get("/today", (req, res) => {
-  res.send(`${Date.now()}`);
-});
-app.listen(3000, () => {
-  console.log(`server is running at 3000`);
+app.listen(port, () => {
+  console.log(`server is running at ${port}`);
 });
